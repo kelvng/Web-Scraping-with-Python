@@ -1,0 +1,14 @@
+{
+  "DeepScan": 2,
+  "Post": "https://vneconomy.vn/",
+  "Addurl":"https://vneconomy.vn",
+  "ConfigSelectorJson": {
+    "header": "header",
+    "headerclass": "detail__header",
+    "space": "div",
+    "spaceclass": "detail__content",
+    "image": "figure",
+    "imageclass": "{'class':['detail__avatar', 'image-wrap align-center-image']}"
+  },
+  "ListKeyWord": ["Cổ phiếu","oscar","FLC"]
+}

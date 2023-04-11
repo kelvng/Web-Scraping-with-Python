@@ -1,0 +1,5 @@
+
+  if (!window.localStorage.getItem('__yoid__')) {
+      window.localStorage.setItem('__yoid__', '6eaa92adc1d9b14548443fdce7abd7df');
+  }
+    

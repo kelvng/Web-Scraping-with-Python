@@ -1,0 +1,39 @@
+{
+  "Login": {
+    "Username": "zetabase3i@gmail.com",
+    "Password": "Langnghiem@79"
+  },
+  "Posts": {
+    "Content": "hello i stay there"
+  },
+  "comment" :{
+    "Post": ["https://qr.ae/pvsZel","https://qr.ae/pvsZZ3","https://qr.ae/pvsZct"],
+    "content": "very nice"
+  },
+  "follow": {
+    "topic": {
+      "name": ["life","LOL","USA"]
+    },
+    "profile": {
+      "name": ["life","LOL","USA"]
+    }
+  },
+  "unfollow": {
+    "topic": {
+      "name": ["life","LOL","USA"]
+    },
+    "profile": {
+      "name": ["life","LOL","USA"]
+    }
+  },
+  "Upvote": {
+    "post": ["https://qr.ae/pvsZel","https://qr.ae/pvsZZ3","https://qr.ae/pvsZct"]
+  },
+  "DownVote": {
+    "post": ["https://qr.ae/pvsZel","https://qr.ae/pvsZZ3","https://qr.ae/pvsZct"]
+  },
+  "share": {
+    "Post": ["https://qr.ae/pvsZel","https://qr.ae/pvsZZ3","https://qr.ae/pvsZct"],
+    "content": "nice that nice"
+  }
+}

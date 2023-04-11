@@ -1,0 +1,100 @@
+
+{
+    "UserName": "zetabase3i@gmail.com",
+    "PassWord": "Langnghiem@79",
+    "check": "",
+    "Post": {
+        "Main_post": {
+            "Group": [
+                {
+                    "id": "292878781280730"
+                }
+            ],
+            "friends": "",
+            "content": {
+                "Image": "",
+                "content": "hello bro!"
+            }
+        },
+        "Comment_post": {
+            "Group": "",
+            "post": "",
+            "friends": "",
+            "content": {
+                "Image": "Pictures/Screenshot_1.png",
+                "video": ""
+            },
+            "start_time": "",
+            "end_time": ""
+        }
+    },
+    "Get": {
+        "Post": {
+            "Group": "",
+            "friends": "",
+            "keywords": [
+                "Java",
+                "PHP",
+                "Python"
+            ],
+            "from": "2022-01-04",
+            "to": "2022-04-04"
+        },
+        "Comment": {
+            "Group": "",
+            "friends": "",
+            "keywords": [
+                "Covid",
+                "News",
+                "Code"
+            ],
+            "from": "2022-01-03",
+            "to": "2022-04-04"
+        }
+    },
+    "Like": {
+        "Post": {
+            "Group": "",
+            "friends": "",
+            "keywords": [
+                "Java",
+                "PHP",
+                "Python"
+            ],
+            "from": "2022-01-04",
+            "to": "2022-04-04"
+        },
+        "Comment": {
+            "Group": "",
+            "friends": "",
+            "post": "",
+            "keywords": "",
+            "from": "",
+            "to": ""
+        }
+    },
+    "Unlike": {
+        "Post": {
+            "Group": "",
+            "friends": "",
+            "keywords": "",
+            "from": "",
+            "to": ""
+        },
+        "Comment": {
+            "Group": "",
+            "friends": "",
+            "keywords": ""
+        }
+    },
+    "Invite": {
+        "Group": "",
+        "friends": ""
+    },
+    "Follow": {
+        "Name": ""
+    },
+    "Unfollow": {
+        "friends": ""
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "Post": {
+    "Main_post": {
+      "content": "",
+      "media": "",
+      "hashtag": ""
+    },
+    "Comment": {
+      "content": "",
+      "hashtag": ""
+    }
+  },
+  "Get": {
+    "post": ""
+  },
+  "Like": {
+    "post": ""
+  },
+  "Unlike":{
+    "post": ""
+  },
+  "UserName": "zetabase3i@gmail.com",
+  "PassWord": "Langnghiem@79"
+}

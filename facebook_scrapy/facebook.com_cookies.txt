@@ -1,0 +1,22 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.facebook.com	TRUE	/	TRUE	1712303425	sb	oKmmY8v-ThCYm0TBur6fHErR	26
+.facebook.com	TRUE	/	TRUE	1706426787	datr	oammY-WLGSV9rb93qsZEp_Mo	28
+.facebook.com	TRUE	/	TRUE	1678356160	dpr	0.8999999761581421	21
+.facebook.com	TRUE	/	TRUE	1709286997	c_user	100073734591574	21
+.facebook.com	TRUE	/	TRUE		usida	eyJ2ZXIiOjEsImlkIjoiQXJxdzA3ZDFnamVmb2giLCJ0aW1lIjoxNjc3NzUwMDI1fQ%3D%3D	77
+.facebook.com	TRUE	/	TRUE	1678356160	wd	2133x1041	11
+.facebook.com	TRUE	/	TRUE	1709286997	xs	42%3A12g1I23B-ULBEg%3A2%3A1677743426%3A-1%3A6279%3A%3AAcUBZkPZ3O1RbXcg5rMQSS17a6FkgaEDOyXVm0YTBg	98
+.facebook.com	TRUE	/	TRUE	1685527356	fr	0A3vyxjNg4VIfX3XH.AWUZOup64wVXpp4m7mPcOGs9PK8.BkAHLZ.oZ.AAA.0.0.BkAHRA.AWXxsXfE0fY	84
+.facebook.com	TRUE	/	TRUE		presence	C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1677751363445%2C%22v%22%3A1%7D	75
+www.facebook.com	FALSE	/			sb	oKmmY8v-ThCYm0TBur6fHErR	26
+www.facebook.com	FALSE	/			 datr	oammY-WLGSV9rb93qsZEp_Mo	29
+www.facebook.com	FALSE	/			 dpr	0.8999999761581421	22
+www.facebook.com	FALSE	/			 c_user	100073734591574	22
+www.facebook.com	FALSE	/			 usida	eyJ2ZXIiOjEsImlkIjoiQXJxdzA3ZDFnamVmb2giLCJ0aW1lIjoxNjc3NzUwMDI1fQ%3D%3D	78
+www.facebook.com	FALSE	/			 wd	2133x1041	12
+www.facebook.com	FALSE	/			 presence	C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1677750763482%2C%22v%22%3A1%7D	76
+www.facebook.com	FALSE	/			 xs	42%3A12g1I23B-ULBEg%3A2%3A1677743426%3A-1%3A6279%3A%3AAcUBZkPZ3O1RbXcg5rMQSS17a6FkgaEDOyXVm0YTBg	99
+www.facebook.com	FALSE	/			 fr	0A3vyxjNg4VIfX3XH.AWXpkfoWCZZ7ZtXdrbXv_ABs_Ms.BkAHLZ.oZ.AAA.0.0.BkAHLZ.AWX6nnXeOFM	85

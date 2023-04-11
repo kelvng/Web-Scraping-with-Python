@@ -1,0 +1,387 @@
+function getBox(div,id,id1,id2)
+{
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/getbox",
+		   data: {id:id,id1:id1,id2:id2},
+		   success: function(data)
+		   {
+			  $('#'+div).html(data);
+		   }
+	});
+}
+
+jQuery(document).ready(function(){
+	jQuery('.iconexp').each(function(){
+		jQuery(this).DocCollapseBox();
+	});
+	jQuery('.dropdownitem').hover(function()
+	{
+		jQuery(this).children('.dropdown').show();
+	  },function(){
+		jQuery(this).children('.dropdown').hide();
+	});
+	setlinktab();
+});
+function showSearchTip()
+{
+	var intTop  = jQuery('#search').offset().top + 35;
+	var intLeft = jQuery('#search').offset().left;
+	jQuery('#tipSearch').css('top', intTop + 'px');
+	jQuery('#tipSearch').css('left', intLeft + 'px');
+	jQuery('#tipSearch').show();
+}
+
+function doSearch(txtKeyword)
+{
+	var strKey = document.getElementById(txtKeyword).value;
+	var strKeyOrigin = strKey;
+	var strKeyNoVN = locdau(jQuery.trim(strKey));
+	strKey = strKey.replace(/\s+/g, '+').toLowerCase();//chuyen khoang trang thanh dau +
+	var txtModuleSearch = document.getElementById('txtModuleSearch').value;
+	if(txtModuleSearch=='media')
+		var strURL = "http://tailieu.vn/tim-kiem/media/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+	else if(txtModuleSearch=='book')
+		var strURL = "http://tailieu.vn/tim-kiem/sach/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+	else if(txtModuleSearch=='slide')
+		var strURL = "http://beta.tailieu.vn/slide/tim-kiem/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+	else if(txtModuleSearch=='tailieu')
+	{
+		var strURL = "http://tailieu.vn/tag/" + jQuery.trim(strKeyNoVN.replace(" ","-")) + ".html?q=" + jQuery.trim(strKeyOrigin);
+	}
+	else if(txtModuleSearch=='bst')
+		var strURL = "http://tailieu.vn/tim-kiem/bo-suu-tap/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+	else if(txtModuleSearch=='playlist')
+		var strURL = "http://tailieu.vn/tim-kiem/playlist/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+	else if(txtModuleSearch=='thanhvien')
+		var strURL = "http://tailieu.vn/tim-kiem/thanh-vien/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+	else
+		var strURL = "http://tailieu.vn/tim-kiem/" + jQuery.trim(strKey.replace("tag:","")) + ".html";
+		//var strURL = "http://tailieu.vn/tag/" + jQuery.trim(strKeyNoVN.replace(" ","-")) + ".html?q=" + jQuery.trim(strKeyOrigin);
+	window.location.href = strURL;
+}
+
+function locdau(str)
+{
+  str= str.toLowerCase();
+  str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+  str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+  str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+  str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+  str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+  str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+  str= str.replace(/đ/g,"d");
+  str= str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g,"-");
+/* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+  str= str.replace(/-+-/g,"-"); //thay thế 2- thành 1-
+  str= str.replace(/^\-+|\-+$/g,"");
+//cắt bỏ ký tự - ở đầu và cuối chuỗi
+  return str;
+}
+
+function changeName(objName, strName, type, intID)
+{
+	if(type==1)
+	{
+		intCateID1 = intID;
+		strCate1   = strName;
+		getCateDoc(intID);
+		jQuery('#ulCate1').css('display','none');
+		intCateID2 = 0;
+		strCate2   = 'Thể loại con';
+		jQuery('#lnkCate2').html(strCate2);
+	}
+	if(type==2)
+	{
+		strCate2   = strName;
+		intCateID2 = intID;
+		jQuery('#ulCate2').css('display','none');
+	}
+	if(type==3)
+	{
+		intFileType = intID;
+		jQuery('#ulCate3').css('display','none');
+	}
+	jQuery('#' + objName).html(strName);
+}
+function getCateDoc(intID)
+{
+	jQuery.ajax({
+		type: "POST",
+		url: DOMAIN + "search/getcatedoc",
+		data: {intID:intID},
+		success: function(data)
+		{
+			intCateID2 = 0;
+			strCate2   = 'Thể loại con';
+			jQuery('#lnkCate2').html(strCate2);
+			jQuery('#ulCate2').html(data);
+		}
+	});
+}
+function doSearchCate(key)
+{
+	key = key.replace(/\s+/g, '+').toLowerCase();//chuyen khoang trang thanh dau +
+	window.location.href = DOMAIN + 'tim-kiem/' +key+ '.html?c1=' + intCateID1 + '&c2=' + intCateID2 + '&ft=' + intFileType + '&cn1=' + strCate1 + '&cn2=' + strCate2;
+}
+function doSearchCol(did)
+{
+	var key = document.getElementById(did).value;
+	key = key.replace(/\s+/g, '+').toLowerCase();//chuyen khoang trang thanh dau +
+	window.location.href = DOMAIN + 'tim-kiem/bo-suu-tap/' +key+ '.html';
+}
+
+var g_speedSlide=400;
+(function($) {
+	jQuery.fn.DocCollapseBox = function()
+	{
+		var thisObj=this;
+		function _initialize(){
+			var boxnode =jQuery(thisObj).parent().parent().parent().siblings();
+			jQuery(thisObj).attr("title","Thu gọn");
+			if(jQuery(thisObj).hasClass('iconcoll'))
+			{
+				boxnode.hide();
+				jQuery(thisObj).toggle(
+					function(){
+						jQuery(this).removeClass("iconcoll");
+						jQuery(this).attr("title","Thu gọn");
+						boxnode.slideDown(g_speedSlide);
+					},
+					function(){
+						jQuery(this).addClass("iconcoll");
+						jQuery(this).attr("title","Mở rộng");
+						boxnode.slideUp(g_speedSlide);
+					}
+				);
+			}
+			else{
+				jQuery(thisObj).toggle(
+					function(){
+						jQuery(this).addClass("iconcoll");
+						jQuery(this).attr("title","Mở rộng");
+						boxnode.slideUp(g_speedSlide);
+					},
+					function(){
+						jQuery(this).removeClass("iconcoll");
+						jQuery(this).attr("title","Thu gọn");
+						boxnode.slideDown(g_speedSlide);
+					}
+				);
+			}
+		};
+		return _initialize();
+	};
+})(jQuery);
+
+(function($) {
+		jQuery.fn.mdtTooltip = function()
+		{
+			function _initialize(e) {
+				jQuery(this).addClass('over');
+				jQuery('#tooltipcontainer').html(jQuery(this).attr('msghtml'));
+				var tipw=300;
+				var sh=getDocumentSize(4);
+				var wh=getDocumentSize(3);
+				var ww=getDocumentSize(2);
+				var sw=getDocumentSize(5);
+				var tiph=Math.round(jQuery('#mytooltip').height()/2);
+				var ttop=0;
+				var tleft=0;
+				if((e.pageX+(tipw/2))>ww){
+					tleft=ww+sw-tipw-30;
+				}
+				else{
+					tleft=e.pageX-Math.round(tipw/3);
+				}
+				if((e.pageY+2*tiph)>(sh+wh))
+				{
+					ttop=e.pageY-(2*tiph);
+				}
+				else{
+					ttop=e.pageY+10;
+				}
+				jQuery('#tooltipconnector').css('left',e.pageX-tleft);
+				jQuery('#mytooltip').css('top',ttop+10);
+				jQuery('#mytooltip').css('left',tleft);
+				jQuery('#mytooltip').show();
+				return false;
+			};
+			function _finish(){
+				jQuery(this).removeClass('over');
+				jQuery('#mytooltip').hide();
+			};
+			if(jQuery(this).attr('msghtml') && jQuery(this).attr('msghtml')!=''){
+				this.mousemove(_initialize);
+				this.mouseout(_finish);
+			}
+		};
+})(jQuery);
+
+function showguidetip(obj,tiptext,tipwidth){
+		var tipnotediv=document.getElementById('tipnote');
+   		if(tipnotediv==null)
+	   {
+		  jQuery('body').append('<div class="tipnote" id="tipnote"><div class="tiparr"><div class="tipcon"></div></div></div>')
+	  	}
+		var intleft=jQuery(obj).parents('li').offset().left+jQuery(obj).parents('li').width()+5;
+		var inttop=jQuery(obj).offset().top;
+		jQuery('.tipnote').css('top',inttop+'px');
+		jQuery('.tipnote').css('left',intleft+'px');
+		jQuery('.tipnote').css('width',tipwidth+'px');
+		jQuery('.tipnote .tipcon').html(tiptext);
+		jQuery('.tipnote').fadeIn();
+}
+function hideguidetip(){
+	jQuery('.tipnote').hide();
+}
+
+function setlinktab(){
+		jQuery('.listlink a').click(function(){
+			if(jQuery(this).attr('rel'))
+			{
+				jQuery('.listlink li').removeClass('active');
+				jQuery(this).parent().addClass('active');
+				jQuery('.conde05').hide();
+				jQuery('#'+jQuery(this).attr('rel')).show();
+			}
+			return false;
+		});
+}
+/* cao box */
+var gMsgHtml=null;
+var ym2msgbox = {
+	intWidth:1,
+	dialogcommon:"#dialogcommon",
+	msgcontain:"#msgcontain",
+	dialogbacklayer:"#dialogbacklayer",
+	show:function(boxId,msgWidth)
+	{
+		if(gMsgHtml!=null) jQuery('body').append(gMsgHtml);
+		this.intWidth=msgWidth;
+		this.init();
+		gMsgHtml=jQuery("#"+boxId);
+		jQuery(this.msgcontain).html(jQuery("#"+boxId).html());
+		jQuery("#"+boxId).remove();
+		var dialogTop=Math.round(getDocumentSize(4)+(getDocumentSize(3)-jQuery(this.dialogcommon).height())/2);
+		jQuery(this.dialogcommon).css({left: Math.round(getDocumentSize(2)/2-this.intWidth/2) +"px"});
+		jQuery(this.dialogcommon).css({top:dialogTop +"px"});
+		jQuery(this.dialogcommon).fadeIn(300, function()
+		{
+			jQuery("#dialogbacklayer").show();
+			 jQuery(this.dialogcommon).css({display:'block'});
+		});
+		jQuery("#dialogbacklayer").click(function(){
+			ym2msgbox.hide();
+		});
+		window.onresize=this.getpos;
+		window.onscroll=this.getpos;
+	},
+	hide:function(){
+		jQuery(this.dialogbacklayer).hide();
+		jQuery(this.dialogcommon).hide();
+		jQuery('body').append(gMsgHtml);
+		gMsgHtml=null;
+	},
+	getpos: function(){
+		var dialogTop=Math.round(getDocumentSize(4)+(getDocumentSize(3)-jQuery(this.dialogcommon).height())/2);
+		jQuery(ym2msgbox.dialogcommon).css({left: Math.round((getDocumentSize(2)-ym2msgbox.intWidth)/2)+"px"});
+		jQuery(ym2msgbox.dialogcommon).css({top: dialogTop+"px"});
+	},
+	init:function()
+	{
+	 	var backobj=document.getElementById('dialogbacklayer');
+		if (backobj == null || backobj == 'undefined'){
+			jQuery('body').append('<div id="dialogbacklayer">&nbsp;</div><div id="dialogcommon" class="select-free"><!--[if lte IE 6.5]><iframe></iframe><![endif]--><div class="rowtop"><div class="lb_top_border_cl"></div><div class="wdialog"></div><div class="lb_top_border_cr"></div></div><div class="rowmid"><div class="wdialog"><div id="msgcontain"></div></div></div><div class="rowbot"><div class="lb_bot_border_cl"></div><div class="wdialog"></div><div class="lb_bot_border_cr"></div></div></div>');
+		}
+		jQuery('#dialogcommon').css('width',this.intWidth+20+'px');
+		jQuery('#msgcontain').css('width',this.intWidth+'px');
+		jQuery('#dialogcommon .wdialog').css('width',(this.intWidth)+'px');
+	}
+}
+function getDocumentSize(val)
+{
+	var xScroll,yScroll,value;
+	var hasInner = typeof(window.innerWidth) == 'number';
+	var hasElement = document.documentElement && document.documentElement.clientWidth;
+	var numShiftY = hasInner?pageYOffset:hasElement?document.documentElement.scrollTop:document.body.scrollTop;
+	var numShiftX = hasInner?pageXOffset:hasElement?document.documentElement.scrollLeft:document.body.scrollLeft;
+	if(window.innerHeight&&window.scrollMaxY)
+	{
+		xScroll=window.innerWidth+window.scrollMaxX;
+		yScroll=window.innerHeight+window.scrollMaxY;
+	}
+	else if(document.body.scrollHeight>document.body.offsetHeight)
+	{
+		xScroll=document.body.scrollWidth;
+		yScroll=document.body.scrollHeight;
+	}
+	else{
+		xScroll=document.body.offsetWidth;
+		yScroll=document.body.offsetHeight;
+	}
+	var windowWidth,windowHeight;
+
+	if(self.innerHeight)
+	{
+		if(document.documentElement.clientWidth){
+			windowWidth=document.documentElement.clientWidth;
+		}
+		else{
+			windowWidth=self.innerWidth;
+		}
+		windowHeight=self.innerHeight;
+	}
+	else if(document.documentElement&&document.documentElement.clientHeight)
+	{
+		windowWidth=document.documentElement.clientWidth;
+		windowHeight=document.documentElement.clientHeight;
+	}
+	else if(document.body)
+	{
+		windowWidth=document.body.clientWidth;
+		windowHeight=document.body.clientHeight;
+	}
+	if(yScroll<windowHeight){
+		pageHeight=windowHeight;
+	}
+	else{
+		pageHeight=yScroll
+	}
+
+	if(xScroll<windowWidth){
+		pageWidth=xScroll
+	}
+	else{
+		pageWidth=windowWidth
+	}
+	arrayPageSize=new Array(pageWidth,pageHeight,windowWidth,windowHeight,numShiftY,numShiftX)
+	return arrayPageSize[val]
+}
+function getCookie(NameOfCookie){
+    if (document.cookie.length > 0) {
+    begin = document.cookie.indexOf(NameOfCookie+"=");
+    if (begin != -1) {
+      begin += NameOfCookie.length+1;
+      end = document.cookie.indexOf(";", begin);
+      if (end == -1) end = document.cookie.length;
+        return unescape(document.cookie.substring(begin, end));
+    }
+  }
+  return null;
+}
+
+function setCookie(NameOfCookie, value, expiredays) {
+var ExpireDate = new Date ();
+ExpireDate.setTime(ExpireDate.getTime() + (expiredays * 24 * 3600 * 1000));
+
+  document.cookie = NameOfCookie + "=" + escape(value) +
+  ((expiredays == null) ? "" : "; expires=" + ExpireDate.toGMTString());
+}
+
+function delCookie(NameOfCookie) {
+  if (getCookie(NameOfCookie)) {
+    document.cookie = NameOfCookie + "=" +
+    "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+  }
+}

@@ -1,0 +1,21 @@
+﻿/*PARAMETERS*/
+/* GENERATION: 21:5:26-12, April 2016-132274 */
+
+// Main file source
+var ad_132274 = {};
+ad_132274.id     = "c132274";
+ad_132274.src    = "<script type=\"text/javascript\">var _abd = _abd || [];/* load placement for account: congha, site: http://tailieu.vn, size: 1x1 - web, zone: popup */_abd.push([\"1248495153\",\"Popup\",\"1348037134\"]);</script><script src=\"http://media.adnetwork.vn/js/adnetwork.js\" type=\"text/javascript\"></script><noscript><div style=\"bottom:0;position: fixed;right: 0;\"><a href=\"http://track.adnetwork.vn/247/adServerNs/zid_1348037134/wid_1248495153/\" target=\"_blank\"><img src=\"http://delivery.adnetwork.vn/247/noscript/zid_1348037134/wid_1248495153/\" /></a></div></noscript>";
+ad_132274.width  = "260";
+ad_132274.height = "230";
+ad_132274.ver    = "1";
+// Cache buster
+var cb_132274 = new Date().getTime();
+// Zone
+var zone_132274 = 0;
+if(typeof innity_zone != "undefined") {
+	zone_132274 = innity_zone;
+	innity_zone = 0;
+}
+// Start writing
+document.write(ad_132274.src);
+// Ad start

@@ -1,0 +1,21 @@
+{
+  "Post": {
+    "Main_post": {
+      "content": "",
+      "media": ""
+    },
+    "Comment": {
+      "content": "",
+      "media": ""
+    }
+  },
+  "Get": {
+    "post": ""
+  },
+  "Like": {
+    "post": ""
+  },
+  "Unlike":{
+    "post": ""
+  }
+}

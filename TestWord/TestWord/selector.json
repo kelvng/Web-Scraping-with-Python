@@ -1,0 +1,42 @@
+[
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    },
+    {"time_get": "//li[@class='nav-item']",
+    "selector": "href",
+    "content": "title"
+    }
+]

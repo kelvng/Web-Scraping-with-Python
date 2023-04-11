@@ -1,0 +1,26 @@
+{
+    "Login":{
+    "Username": "zetabase3i@gmail.com",
+    "Password": "Langnghiem79"
+    },
+  "Posts": {
+      "media": "",
+      "content": "new video for new wwork"
+  },
+  "comment": {
+    "link": ["https://www.youtube.com/watch?v=UVbv-PJXm14", "https://www.youtube.com/watch?v=RzE7ZcGwFvU"],
+    "content": "hello that video nice"
+  },
+  "Subcriber": {
+    "linkSub":["https://www.youtube.com/watch?v=UVbv-PJXm14", "https://www.youtube.com/watch?v=RzE7ZcGwFvU"]
+  },
+  "Unsubcriber": {
+    "linkunsub":["https://www.youtube.com/watch?v=UVbv-PJXm14", "https://www.youtube.com/watch?v=RzE7ZcGwFvU"]
+  },
+  "Likelink": {
+    "link": [{"id":"CK6K1EjsJAk"},[{"id":"RzE7ZcGwFvU"}]]
+  },
+  "unlike": {
+    "link": [{"id":"CK6K1EjsJAk"},{"id":"RzE7ZcGwFvU"}]
+  }
+}

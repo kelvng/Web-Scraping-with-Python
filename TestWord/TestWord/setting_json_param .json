@@ -1,0 +1,44 @@
+[
+  "post" : [
+    {"content_upload" : " I need to find some best the dev" , "group":"lapc_lapweb_"},
+    {"get_content": "path",
+
+      "daily"  : {
+                                                "house" : " 10",
+                                                "minutes" : " 30",
+                                                "second" : " 10"
+                                        }   ,
+                          "weekly" : {
+                                                "th" : "sunday"
+                                                "house" : " 10",
+                                                "minutes" : " 30",
+                                                "second" : " 10"
+                                        }   ,
+                          "monthly" : {
+                                                "date_run" : "3"
+                                                "house" : " 10",
+                                                "minutes" : " 30",
+                                                "second" : " 10"
+                                        }
+
+
+                        }
+
+
+
+
+
+                  ],
+
+        "like" : [{},{},{}],
+
+        "unlike" : [{},{},{}],
+
+        "follow" : [{},{},{}],
+
+        "unfollow" : [{},{},{}],
+
+        "comment" : [{},{},{}]
+
+]
+

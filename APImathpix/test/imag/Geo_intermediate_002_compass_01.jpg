@@ -1,0 +1,10 @@
+{
+    "auto_rotate_confidence": 1.7881361458194078e-06,
+    "auto_rotate_degrees": 0,
+    "confidence": 0.99951171875,
+    "confidence_rate": 0.9997558295653994,
+    "is_handwritten": false,
+    "is_printed": true,
+    "request_id": "2022_06_07_3931305b36927dfc6969g",
+    "text": "Find the way to draw a circle that fits the outside of an arbitrary triangle. Assume you only have a compass and a ruler. Prove why the method works."
+}

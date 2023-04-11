@@ -1,0 +1,10 @@
+
+{
+   "title": "h3",
+    "summary": "div",
+    "summaryclass": "story__summary",
+    "image": "figure",
+    "imageclass": "story__thumb",
+    "string": ["USD", "Covid", "Facebook"]
+}
+

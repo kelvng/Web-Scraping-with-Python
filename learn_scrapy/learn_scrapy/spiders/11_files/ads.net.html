@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://as.adrealclick.com/data/ads.net.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+    <script>
+        const maxItems = 100;
+        let storage = {};
+        try {
+            storage = localStorage || {};
+        } catch (e) {
+            console.log('error', e);
+        }
+
+        let decodeBase64 = function (encrypt) {
+            try {
+                return unescape(atob(encrypt || ''))
+            } catch (ex) {
+                console.error('error', ex);
+            }
+            return '';
+        }
+
+        //let oids = JSON.parse(storage.ads_oids || '[]');//object pids có dạng [{i:pid,t:time,p:priority}]
+        let okeys = JSON.parse(decodeBase64(storage.ads_okeys) || '[]');//object pids có dạng [{i:pid,t:time,p:priority}]
+        let postData = function () {
+            let data = {
+                sentinel: 'ads',
+                type: 'meta-okeys',
+                okeys: okeys
+            };
+            window.parent.postMessage(data, "*");
+        }
+        postData();
+                    //window.addEventListener("load", postData);
+    </script>
+
+</body></html>

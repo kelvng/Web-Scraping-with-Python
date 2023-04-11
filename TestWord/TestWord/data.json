@@ -1,0 +1,15 @@
+{"list_group": "//li[@class='nav-item']",
+    "link_group": "a[@class='nav-link']/@href",
+    "list_post_hl": "//div[@class='story__header']",
+    "link_post_hl": "h3[@class='story__title']/a/@href",
+    "list_post": "//header[@class='story__header']",
+    "link_post": "h3[@class='story__title']/a/@href",
+    "next_page":["ul" ,"pagination justify-content-end"],
+    "url": "//link[@rel=\"canonical\"]/@href",
+    "date": "div.detail__meta::text",
+    "title": "h1.detail__title::text",
+    "author": "//div[@class='detail__tools']/div[@class='detail__author']/strong/text()",
+    "head": "h2.detail__summary::text",
+    "contents": "//*[(@id = 'articleContent')]",
+    "content": "p"
+    }

@@ -1,0 +1,1433 @@
+function showQuenmatkhau(){
+	 $.fancybox.showLoading();
+   jQuery.fancybox.open({
+	  padding : 0,
+	  width: 782,
+	  scrolling: 'no',
+	  'overflow': 'hidden',
+	  'closeBtn'      : false,
+	  'closeClick'    : false,
+	  href:DOMAIN + 'loginbox/getbox?id=changepass',
+	  type: 'ajax',
+	  afterLoad: function() { changeCaptchaChangepass(); }
+	});
+}
+function showDangky(){
+	 $.fancybox.showLoading();
+   jQuery.fancybox.open({
+	  padding : 0,
+	  width: 750,
+	  scrolling: 'no',
+	  'overflow': 'hidden',
+	  'closeBtn'      : false,
+	  'closeClick'    : false,
+	  href:DOMAIN + 'loginbox/getbox?id=register',
+	  type: 'ajax'
+	});
+}
+function showDangnhap(){
+	 $.fancybox.showLoading();
+   jQuery.fancybox.open({
+	  padding : 0,
+	  width: 750,
+	  height:292,
+	  scrolling: 'no',
+	  'overflow': 'hidden',
+	  'closeBtn'      : false,
+	  'closeClick'    : false,
+	  href:DOMAIN + 'loginbox/getbox?id=login',
+	  type: 'ajax'
+	});
+}
+
+jQuery("#amessalert").fancybox({
+	'padding'		  : 0,
+	'scrolling'		  : 'no',
+	'autoDimensions'  : true,
+	'autoScale'		  : true,
+	'titleShow'		  : false,
+	'closeBtn' 	      : false,
+	helpers: {
+		title: null
+	}
+});
+	
+	//jQuery.fancybox.close();
+	//jQuery("#inlinefb").fancybox().trigger('click');
+	//-- box dang nhap
+	$(function(){
+	jQuery("#alogin").fancybox({
+		'padding'		  : 0,
+		'scrolling'		  : 'no',
+		'autoDimensions'  : true,
+		'autoScale'		  : true,
+		'titleShow'		  : false,
+		'closeBtn' 	      : false,
+		'closeClick' 	  : false,
+		helpers: {
+			title: null
+		},
+		'afterLoad': function() { getBox('dboxlogin','login'); }
+		//'onClosed'		  : function() {
+			//$("#login_error").hide();
+		//}
+	});
+})
+	//-- box dang ky
+	$(function(){
+	jQuery("#aregister").fancybox({
+		'padding'		  : 0,
+		'scrolling'		  : 'no',
+		'autoDimensions'  : true,
+		'autoScale'		  : true,
+		'titleShow'		  : false,
+		'closeBtn' 	      : false,
+		helpers: {
+			title: null
+		},
+		'afterLoad': function() { getBox('dboxregister','register'); }
+		//'onClosed'		  : function() {
+			//$("#login_error").hide();
+		//}
+	});
+	})
+	//-- box quen mat khau
+	$(function(){
+	jQuery("#achangepass").fancybox({
+		'padding'		  : 0,
+		'scrolling'		  : 'no',
+		'autoDimensions'  : true,
+		'autoScale'		  : true,
+		'titleShow'		  : false,
+		'closeBtn' 	      : false,
+		helpers: {
+			title: null
+		},
+		'afterLoad': function() { getBox('dboxchangepass','changepass');changeCaptchaChangepass(); }
+	});
+	})
+	//-- box map
+	$(function(){
+	jQuery("#amapacc").fancybox({
+		padding		  	  : 0,
+		scrolling		  : 'no',
+		autoDimensions    : false,
+		autoScale	  	  : false,
+		titleShow		  : false,
+		closeBtn 	      : false,
+		fitToView 	      : false,
+		autoSize 		  : false,
+		height            : 570,
+		width		      : 782,
+		helpers: {
+			title: null
+		}
+	});
+	})
+
+function loginFB()
+{
+	FB.init({
+       // appId: '191278594246800',
+        appId: '1202855023074077',
+        status: true,
+        cookie: true,
+        xfbml: true
+    });
+   FB.login(function(response) {
+	   jQuery.fancybox.showActivity;//-- Shows loading animation
+	   if (response.authResponse) {
+	     jQuery.fancybox.hideActivity;
+		 //alert('Welcome!  Fetching your information.... ');
+		 FB.api('/me', function(response) {
+		   //alert('Good to see you, ' + response.name + '.');
+		   jQuery.fancybox.close();
+
+		   //-- hien thi message thanh cong
+		   jQuery("#loginmessage").fancybox({
+				padding		  	  : 0,
+				scrolling		  : 'no',
+				autoDimensions    : true,
+				autoScale	  	  : true,
+				titleShow		  : false,
+				closeBtn 	      : false,
+				fitToView 	      : false,
+				autoSize 		  : false,
+				height            : 40,
+				width		      : 140,
+				helpers: {
+					title: null
+			}}).trigger('click');
+
+		   var strURL     = window.location.href;
+		   //-- goi ajax xu ly login FB redirect trang
+		   jQuery.ajax({
+				type	: "POST",
+				cache	: false,
+				url		: DOMAIN + "loginbox/handlefb",
+				data	: jQuery(this).serializeArray(),
+				success: function(data) {
+					if(data==1)
+					{
+						jQuery.fancybox.close();
+						window.location.href = strURL;
+					}
+					else if(data==2)
+					{
+						jQuery.fancybox.close();
+						jQuery("#amapacc").fancybox({
+							padding		  	  : 0,
+							scrolling		  : 'no',
+							autoDimensions    : false,
+							autoScale	  	  : false,
+							titleShow		  : false,
+							closeBtn 	      : false,
+							fitToView 	      : false,
+							autoSize 		  : false,
+							height            : 580,
+							width		      : 782,
+							'afterLoad': function() { getBox('dboxmapacc','map');getinfoFB(); },
+							helpers: {
+								title: null
+							}}).trigger('click');
+							changeCaptchaLogin_Map();
+					}
+				}
+		   });
+
+		 });
+	   }
+	   else
+	   {
+	     jQuery.fancybox.hideActivity;
+		 //alert('User cancelled login or did not fully authorize.');
+	   }
+   }, {scope: 'email,manage_pages,publish_actions,user_status'});
+}
+
+var isSlidedownlogin = 1;
+var isSlidedownregis = 1;
+function slidedownLogin(val)
+{
+	if(val==3)//-- dang nhap
+	{
+		if(isSlidedownlogin==1)
+		{
+			jQuery('#pregister').removeClass('arropen');
+			jQuery('#pregister').addClass('arrclose');
+			jQuery('#dregister').slideUp();
+
+			jQuery('#plogin3').removeClass('arrclose');
+			jQuery('#plogin3').addClass('arropen');
+			jQuery('#dlogin3').slideDown();
+			isSlidedownlogin = 0;
+			//jQuery.fancybox.resize();
+		}
+		else
+		{
+			jQuery('#plogin3').removeClass('arropen');
+			jQuery('#plogin3').addClass('arrclose');
+			jQuery('#dlogin3').slideUp();
+			isSlidedownlogin = 1;
+			//jQuery.fancybox.resize();
+		}
+	}
+	else if(val==4)//-- dang ky
+	{
+		changeCaptchaLogin();
+		if(isSlidedownregis==1)
+		{
+			jQuery('#plogin3').removeClass('arropen');
+			jQuery('#plogin3').addClass('arrclose');
+			jQuery('#dlogin3').slideUp();
+
+			jQuery('#pregister').removeClass('arrclose');
+			jQuery('#pregister').addClass('arropen');
+			jQuery('#dregister').slideDown();
+			isSlidedownregis = 0;
+			//jQuery.fancybox.resize();
+		}
+		else
+		{
+			jQuery('#pregister').removeClass('arropen');
+			jQuery('#pregister').addClass('arrclose');
+			jQuery('#dregister').slideUp();
+			isSlidedownregis = 1;
+			//jQuery.fancybox.resize();
+		}
+	}
+	else if(val==5)//-- dang nhap box dang ky
+	{
+		if(isSlidedownlogin==1)
+		{
+			jQuery('#pregister6').removeClass('arropen');
+			jQuery('#pregister6').addClass('arrclose');
+			jQuery('#dregister6').slideUp();
+
+			jQuery('#plogin5').removeClass('arrclose');
+			jQuery('#plogin5').addClass('arropen');
+			jQuery('#dlogin5').slideDown();
+			isSlidedownlogin = 0;
+			//jQuery.fancybox.resize();
+		}
+		else
+		{
+			jQuery('#plogin5').removeClass('arropen');
+			jQuery('#plogin5').addClass('arrclose');
+			jQuery('#dlogin5').slideUp();
+			isSlidedownlogin = 1;
+			//jQuery.fancybox.resize();
+		}
+	}
+	else if(val==6)//-- dang ky box dang ky
+	{
+		changeCaptchaLogin_Regis();
+		if(isSlidedownregis==1)
+		{
+			jQuery('#plogin5').removeClass('arropen');
+			jQuery('#plogin5').addClass('arrclose');
+			jQuery('#dlogin5').slideUp();
+
+			jQuery('#pregister6').removeClass('arrclose');
+			jQuery('#pregister6').addClass('arropen');
+			jQuery('#dregister6').slideDown();
+			isSlidedownregis = 0;
+			//jQuery.fancybox.resize();
+		}
+		else
+		{
+			jQuery('#pregister6').removeClass('arropen');
+			jQuery('#pregister6').addClass('arrclose');
+			jQuery('#dregister6').slideUp();
+			isSlidedownregis = 1;
+			//jQuery.fancybox.resize();
+		}
+	}
+}
+function checkLogin()
+{
+	var strUsername = jQuery('#txtLoginUsername').val();
+	var strPass     = jQuery('#txtLoginPassword').val();
+	//var strCaptcha  = jQuery('#txtCaptcha').val();
+	if(strUsername=='')
+	{
+		alert('Bạn vui lòng nhập Username/Email');
+		jQuery('#txtLoginUsername').focus();
+		return false;
+	}
+	else if(strPass=='')
+	{
+		alert('Bạn vui lòng nhập Mật khẩu!');
+		jQuery('#txtLoginPassword').focus();
+		return false;
+	}
+	// else if(strCaptcha=='')
+	// {
+		// alert('Bạn vui lòng nhập Mã xác nhận!');
+		// jQuery('#txtCaptcha').focus();
+		// return false;
+	// }
+	jQuery('#frmLogin').submit();
+}
+
+function changeCaptchaLogin()
+{
+	//ajax_changeCaptcha('spmImgCaptcha','captcha_id');
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/changecaptchalb",
+		   data: {},
+		   success: function(data)
+		   {
+			   arrData = data.split('=!!=');
+			   jQuery('#spmImgCaptcha').html(arrData[0]);
+			   jQuery('#captcha_id').val(arrData[1]);
+		   }
+	});
+}
+function changeCaptchaChangepass()
+{
+	//ajax_changeCaptcha('spmImgCaptchaChangepass','captcha_id_changepass');
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/changecaptchalb",
+		   data: {},
+		   success: function(data)
+		   {
+			   arrData = data.split('=!!=');
+			   jQuery('#spmImgCaptchaChangepass').html(arrData[0]);
+			   jQuery('#captcha_id_changepass').val(arrData[1]);
+		   }
+	});
+}
+
+//----------------- box quen mat khau -------------------------------------
+function checkEmail(strEmail,isArray)
+{
+	if(isArray==1)
+	{
+		arrEmail=strEmail.split(',');
+		for(i=0;i<arrEmail.length;i++)
+		{
+			arrEmail[i]=arrEmail[i].replace(/^\s+|\s+$/g,"");
+			if (arrEmail[i].search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1 && arrEmail[i]!="")
+			{
+				return false;
+			}
+			else
+				return true;
+		}
+	}
+	else
+	{
+		if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1)
+		{
+			return false;
+		}
+		else
+			return true
+	}
+}
+function checkInvalidEmail()
+{
+	var strEmail 	   = trim(jQuery("#txtRecoverEmail").val());
+    var strCaptcha     = trim(jQuery('#txtCaptchaChangepass').val());
+	var inthdnCaptcha  = jQuery('#captcha_id_changepass').val();
+	if(strEmail == '' || strEmail == 'Địa chỉ Email')
+	{
+		jQuery("#txtErrorEmail").html("Vui lòng nhập Địa chỉ Email");
+		jQuery("#txtRecoverEmail").focus();
+		jQuery("#txtRecoverEmail").val("");
+		return false;
+	}
+	else if(strEmail)
+	{
+		if(!checkEmail(strEmail,false))
+		{
+			jQuery("#txtErrorEmail").html("không hợp lệ");
+			jQuery("#txtRecoverEmail").focus();
+			jQuery("#txtRecoverEmail").val("");
+			return false;
+		}
+		checkForgetEmails(strEmail);
+	}
+	if(strCaptcha=='' || strCaptcha=="Nhập mã xác nhận" || strCaptcha==" Nhập mã xác nhận")
+	{
+		jQuery("#txtErrorCaptchaChangepass").html("Vui lòng nhập mã xác nhận");
+		jQuery('#txtCaptchaChangepass').focus();
+		jQuery("#txtCaptchaChangepass").val("");
+		return false;
+	}
+	return true;
+}
+function checkForgetEmails(strEmail)
+{
+	//ajax_checkForgetEmails(strEmail);
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/checkforgetemailslb",
+		   data: {strEmail:strEmail},
+		   success: function(data)
+		   {
+			  if(data==1)
+			  {
+				  jQuery("#txtErrorEmail").html("Email không tồn tại!");
+				  jQuery('#txtRecoverEmail').focus();
+				  jQuery('#txtRecoverEmail').val("");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  jQuery("#txtErrorEmail").html("Email có thể dùng!");
+				  return false;
+			  }
+		   }
+		});
+}
+function forgetPassword()
+{
+	strEmail 		   = trim(jQuery("#txtRecoverEmail").val());
+	var strCaptcha     = jQuery('#txtCaptchaChangepass').val();
+	var inthdnCaptcha  = jQuery('#captcha_id_changepass').val();
+	if(checkInvalidEmail())
+	{
+		//ajax_sendPass(strEmail,strCaptcha,inthdnCaptcha);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/sendpasslb",
+		   data: {strEmail:strEmail,strCaptcha:strCaptcha,inthdnCaptcha:inthdnCaptcha},
+		   success: function(data)
+		   {
+			  if(data==1)
+			  {
+				  jQuery("#txtErrorEmail").html("Captcha không đúng!");
+				  changeCaptchaChangepass();
+				  jQuery('#txtCaptchaChangepass').focus();
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  alert('Gửi mail lấy lại mật khẩu đến ' + strEmail + ' thành công! (Nếu trong hộp mail Inbox không có, bạn vui lòng kiểm tra thêm trong hộp mail spam/bulk mail)');
+				  jQuery.fancybox.close();
+				  jQuery('#txtErrorEmail').html('');
+				  jQuery('#txtRecoverEmail').html('');
+				  jQuery('#txtErrorCaptchaChangepass').html('');
+				  return false;
+			  }
+			  else if(data==3)
+			  {
+				  alert("Không tìm thấy tài khoản ứng với email này!");
+				  jQuery('#txtRecoverEmail').focus();
+				  jQuery('#txtRecoverEmail').select();
+				  return false;
+			  }
+		   }
+		});
+	}
+}
+//----------------- !box quen mat khau -------------------------------------
+//-----------  box login -------------------------------------------------
+//-- dang nhap tai lieu
+function loginfancybox()
+{
+	strUsername	   = trim(jQuery("#txtLoginUsername").val());
+	strPassword	   = trim(jQuery("#txtLoginPassword").val());
+	if(jQuery("#remem_pass").is(':checked')) intRemember = 1;
+	else intRemember = 0;
+	var strURL     = window.location.href;
+	if(strUsername == '' || strUsername == 'Nhập Username hoặc Email')
+	{
+		jQuery("#txtErrorLoginUsername").html("Vui lòng Nhập Username hoặc Email!");
+		jQuery("#txtLoginUsername").focus();
+		jQuery("#txtLoginUsername").val("");
+		return false;
+	}
+	if(strPassword == '' || strPassword == 'Mật khẩu' || strPassword == ' Mật khẩu')
+	{
+		jQuery("#txtErrorLoginUsername").html("Vui lòng nhập Mật khẩu!");
+		jQuery("#txtLoginPassword").focus();
+		jQuery("#txtLoginPassword").val("");
+		return false;
+	}
+	jQuery("#txtErrorLoginUsername").html("");
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/loginmemberlb",
+		   data: {user:strUsername,pass:strPassword,url:strURL,remember:intRemember},
+		   success: function(data)
+		   {
+			  if(data==5)
+			  {
+				  alert("Tài khoản của bạn hiện đang được đăng nhập bởi một người khác, vui lòng thử lại sau!");
+				  jQuery.fancybox.close();
+				  return false;
+			  }
+			  else if(data==0)
+			  {
+				  jQuery.fancybox.close();
+				  window.location.href = strURL;
+				}
+				else if(data==99)
+			  {
+				  jQuery.fancybox.close();
+				  window.location.href = DOMAIN + 'tai-khoan/doi-pass.html';
+			  }
+			  else if(data==1 || data==2 || data==3)
+			  {
+				  alert("Tài khoản/Mật khẩu chưa chính xác, vui lòng liên hệ ban quản trị!");
+				  return false;
+			  }
+		   }
+	});
+}
+
+function checkUsers(strBox,strUser)
+{
+	if(strUser!='')
+	{
+		if(strBox == 'boxlogin')
+		{
+			strBox      = "txtUsername";
+			strBoxError = "txtErrorUser";
+		}
+		else if(strBox == 'boxmap')
+		{
+			strBox      = "txtUsername_Map";
+			strBoxError = "txtErrorUser_Map";
+		}
+		else if(strBox == 'boxregis')
+		{
+			strBox      = "txtUsername_Regis";
+			strBoxError = "txtErrorUser_Regis";
+		}
+		//ajax_checkUsers(strBox,strUser);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/checkuserslb",
+		   data: {strBox:strBox,strUser:strUser},
+		   success: function(data)
+		   {
+			  if(data==1)
+			  {
+				  jQuery("#" + strBoxError).html("Chiều dài từ 6-24 ký tự, có thể sử dụng chữ cái (không dấu), chữ số, gạch dưới.");
+				  jQuery("#" + strBox).focus();
+				  jQuery("#" + strBox).val("");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  jQuery("#" + strBoxError).html(strUsername + " đã bị trùng vui lòng chọn tên khác");
+				  jQuery("#" + strBox).focus();
+				  jQuery("#" + strBox).val("");
+				  return false;
+			  }
+			  else if(data==3)
+			  {
+				  jQuery("#" + strBoxError).html(strUsername + " có thể dùng");
+				  return false;
+			  }
+		   }
+		});
+	}
+}
+
+function checkEmails(strEmail,strDivError,strDivEmail)
+{
+	if(strEmail!='')
+	{
+		//ajax_checkEmails(strEmail,strDivError);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/checkemailslb",
+		   data: {strEmail:strEmail,strDivError:strDivError},
+		   success: function(data)
+		   {
+			  if(data==1)
+			  {
+				  jQuery("#" + strDivError).html(strEmail + " đã bị trùng vui lòng chọn email khác");
+				  jQuery("#" + strDivEmail).focus();
+				  jQuery("#" + strDivEmail).val("");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  jQuery("#" + strBoxError).html(strEmail + " có thể dùng");
+			  }
+		   }
+		});
+	}
+}
+
+function registerMember()
+{
+	var strType     = 'boxlogin';
+	strUsername 	= trim(jQuery("#txtUsername").val());
+	strPassword 	= trim(jQuery("#txtPassword").val());
+	strLastName 	= "";
+	strFirstName 	= trim(jQuery("#txtFullname").val());
+	strEmail 		= trim(jQuery("#txtEmail").val());
+	strCaptcha 		= trim(jQuery("#txtCaptcha").val());
+	intCaptchaID 	= trim(jQuery("#captcha_id").val());
+
+	strDay			= jQuery('#txtDay').val();
+	strMonth 		= jQuery('#txtMonth').val();
+	strYear			= jQuery('#txtYear').val();
+	strCity			= jQuery('#txtCity').val();
+	intGenger		= jQuery('#txtGender').val();
+	strBirthDay    = strDay+'-'+strMonth+'-'+strYear;
+
+	if(checkInvalidUsers())
+	{
+		//ajax_insertMember(strType, strUsername, strPassword, strLastName, strFirstName, strEmail, strCaptcha, intCaptchaID, strBirthDay, strCity, intGenger);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/insertmemberlb",
+		   data: {strType:strType,strUsername:strUsername,strPassword:strPassword,strLastName:strLastName,strFirstName:strFirstName,strEmail:strEmail,strCaptcha:strCaptcha,intCaptchaID:intCaptchaID,strBirthDay:strBirthDay,strCity:strCity,intGenger:intGenger},
+		   success: function(data)
+		   {
+			  if(data==99)
+			  {
+				  jQuery("#txtErrorDKCode").html("Captcha không đúng!");
+				  if(strType == 'boxlogin')
+					changeCaptchaLogin();
+				  else if(strType == 'boxmap')
+					changeCaptchaLogin_Map();
+				  else if(strType == 'boxlogin_Regis')
+					changeCaptchaLogin_Regis();
+				  return false;
+			  }
+			  else if(data==1)
+			  {
+				  alert("Xin lỗi " + strUsername + " không thể dùng");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  alert("Xin lỗi " + strEmail + " không thể dùng");
+				  return false;
+			  }
+			  else if(data==3)
+			  {
+				  jQuery.fancybox.close();
+				  window.location.href = DOMAIN + "tai-khoan/chinh-sua-thong-tin.html";
+			  }
+		   }
+		});
+	}
+}
+
+function checkInvalidUsers()
+{
+	strUsername 	= trim(jQuery("#txtUsername").val());
+	strPassword 	= trim(jQuery("#txtPassword").val());
+	strConfirmPass 	= trim(jQuery("#txtCPassword").val());
+	strLastName 	= "";
+	strFirstName 	= trim(jQuery("#txtFullname").val());
+	strEmail 		= trim(jQuery("#txtEmail").val());
+	strConfirmEmail = trim(jQuery("#txtCEmail").val());
+	strCaptcha 		= trim(jQuery("#txtCaptcha").val());
+	intCheckRight   = jQuery('input[name=chkRight]').is(':checked');
+	strDay			= jQuery('#txtDay').val();
+	strMonth 		= jQuery('#txtMonth').val();
+	strYear			= jQuery('#txtYear').val();
+	strCity			= jQuery('#txtCity').val();
+	intGenger		= jQuery('#txtGender').val();
+	strBirthDay    = strDay+'-'+strMonth+'-'+strYear;
+
+	if(strUsername == '' ||  (strUsername == 'Nhập Username' || strUsername == ' Nhập Username'))
+	{
+		jQuery("#txtErrorUser").html("Vui lòng nhập Tài khoản!");
+		jQuery("#txtUsername").focus();
+		jQuery("#txtUsername").val("");
+		return false;
+	}
+	else
+	{
+		if(strUsername.length < 6)
+		{
+			jQuery("#txtErrorUser").html("6 ký tự trở lên");
+			jQuery("#txtUsername").focus();
+			return false;
+		}
+
+		if(strUsername.indexOf('<') != -1 || strUsername.indexOf('>') != -1 || !CheckUsernameChar(strUsername))
+		{
+			jQuery("#txtErrorUser").html("không hợp lệ");
+			jQuery("#txtUsername").focus();
+			return false;
+		}
+		jQuery("#txtErrorUser").html("");
+		checkUsers('boxlogin',strUsername);
+	}
+
+	if(strPassword == '' ||  (strPassword == 'Nhập mật khẩu' || strPassword == ' Nhập mật khẩu'))
+	{
+		jQuery("#txtErrorPass").html("Vui lòng nhập Mật khẩu");
+		jQuery("#txtPassword").focus();
+		jQuery("#txtPassword").val("");
+		return false;
+	}
+	else if(strPassword.length < 6)
+	{
+		jQuery("#txtErrorPass").html("6 ký tự trở lên");
+		jQuery("#txtPassword").focus();
+		return false;
+	}
+	else if(!Checkchar1(strPassword))
+	{
+		jQuery("#txtErrorPass").html("không hợp lệ");
+		jQuery("#txtPassword").focus();
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorPass").html("");
+	}
+
+	if(strConfirmPass == '' ||  strConfirmPass == 'Nhập lại mật khẩu' || strConfirmPass == ' Nhập lại mật khẩu')
+	{
+		jQuery("#txtErrorPass2").html("Vui lòng nhập Xác nhận mật khẩu!");
+		jQuery("#txtCPassword").focus();
+		jQuery("#txtCPassword").val("");
+		return false;
+	}
+
+	if(strPassword != strConfirmPass)
+	{
+		jQuery("#txtErrorPass").html("không giống nhau");
+		jQuery("#txtCPassword").focus();
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorPass").html("&nbsp;");
+		jQuery("#txtErrorPass2").html("&nbsp;");
+	}
+
+	if(strEmail == '' ||  strEmail == 'Nhập địa chỉ Email' || strEmail == ' Nhập địa chỉ Email')
+	{
+		jQuery("#txtErrorLoginEmail").html("Vui lòng nhập Địa chỉ Email");
+		jQuery("#txtEmail").focus();
+		jQuery("#txtEmail").val("");
+		return false;
+	}
+	else
+	{
+		if(!CheckEmail(strEmail))
+		{
+			jQuery("#txtErrorLoginEmail").html("không hợp lệ");
+			jQuery("#txtEmail").focus();
+			return false;
+		}
+		else
+			checkEmails(strEmail,'txtErrorLoginEmail','txtEmail');
+	}
+
+	if(strConfirmEmail == '' ||  strConfirmEmail == 'Nhập lại địa chỉ Email' || strConfirmEmail == ' Nhập lại địa chỉ Email')
+	{
+		jQuery("#txtErrorLoginEmail").html("&nbsp;");
+		jQuery("#txtErrorLoginEmail2").html("Vui lòng nhập Xác nhận Email");
+		jQuery("#txtCEmail").focus();
+		jQuery("#txtCEmail").val("");
+		return false;
+	}
+	else
+	{
+		if(strEmail != strConfirmEmail)
+		{
+			jQuery("#txtErrorLoginEmail").html("&nbsp;");
+			jQuery("#txtErrorLoginEmail2").html("không giống nhau");
+			jQuery("#txtCEmail").focus();
+			return false;
+		}
+		else
+		{
+			jQuery("#txtErrorLoginEmail2").html("&nbsp;");
+			jQuery("#txtErrorLoginEmail").html("&nbsp;");
+		}
+	}
+
+	if(strFirstName == '' || strFirstName=="Họ và Tên" || strFirstName==' Họ và Tên')
+	{
+		jQuery("#txtErrorFullname").html("Vui lòng nhập Họ và Tên");
+		jQuery("#txtErrorFullname").focus();
+		jQuery("#txtErrorFullname").val("");
+		return false;
+	}
+	else if(intGenger == '')
+	{
+		jQuery("#txtErrorFullname").html("&nbsp;");
+		jQuery("#txtErrorGender").html("Bạn vui lòng chọn giới tính!");
+		return false;
+	}
+	else if(strDay=='' || strMonth=="" || strYear=='')
+	{
+		jQuery("#txtErrorGender").html("&nbsp;");
+		jQuery("#txtErrorBirthday").html("Bạn vui lòng chọn ngày tháng năm sinh!");
+		return false;
+	}
+	else if(strCity == '')
+	{
+		jQuery("#txtErrorBirthday").html("&nbsp;");
+		jQuery("#txtErrorCity").html("Bạn vui lòng chọn tỉnh/thành phố!");
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorCity").html("&nbsp;");
+	}
+	if(strCaptcha == '' || strCaptcha == 'Nhập mã xác nhận' || strCaptcha == ' Nhập mã xác nhận')
+	{
+		jQuery("#txtErrorDKCode").html("Vui lòng nhập mã xác nhận");
+		jQuery("#txtCaptcha").focus();
+		jQuery("#txtCaptcha").val("");
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorFullname").html("&nbsp;");
+		jQuery("#txtErrorGender").html("&nbsp;");
+		jQuery("#txtErrorBirthday").html("&nbsp;");
+		jQuery("#txtErrorCity").html("&nbsp;");
+		jQuery("#txtErrorDKCode").html("&nbsp;");
+	}
+
+	if(!intCheckRight)
+	{
+		alert("Vui lòng check chọn Tôi cam kết đồng ý.");
+		return false;
+	}
+	return true;
+}
+//-----------  ! box login -------------------------------------------------
+//-----------  box dong bo -------------------------------------------------
+function registerMemberOpenID()
+{
+	strUsername	   = trim(jQuery("#txtLoginUsernameMap").val());
+	strPassword	   = trim(jQuery("#txtLoginPasswordMap").val());
+	var strURL     = window.location.href;
+	if(strUsername == '' || strUsername == 'Nhập Username hoặc Email' || strUsername == ' Nhập Username hoặc Email')
+	{
+		jQuery("#txtErrortxtLoginUsernameMap").html("Vui lòng Nhập Username hoặc Email!");
+		jQuery("#txtLoginUsernameMap").focus();
+		jQuery("#txtLoginUsernameMap").val("");
+		return false;
+	}
+	if(strPassword == '' || strPassword == 'Mật khẩu' || strPassword == ' Mật khẩu')
+	{
+		jQuery("#txtErrortxtLoginUsernameMap").html("Vui lòng nhập Mật khẩu!");
+		jQuery("#txtLoginPasswordMap").focus();
+		jQuery("#txtLoginPasswordMap").val("");
+		return false;
+	}
+	jQuery("#txtErrortxtLoginUsernameMap").html("");
+	if(strUsername && strPassword)
+	{
+		//ajax_updateMemberOpenIDFB(strUsername, strPassword, strURL);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/updatememberopenidlb",
+		   data: {strUsername:strUsername,strPassword:strPassword,strURL:strURL},
+		   success: function(data)
+		   {
+			  if(data==1)
+			  {
+				  alert("Tài khoản đã kích hoạt với OpenID này.");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  window.location.href = strURL;
+				  return false;
+			  }
+			  else if(data==3)
+			  {
+				 alert('Tài khoản/Mật khẩu chưa chính xác, vui lòng liên hệ ban quản trị.');
+				 return false;
+			  }
+			  else if(data==4)
+			  {
+				 alert('Không thành công!');
+				 return false;
+			  }
+		   }
+		});
+	}
+}
+function getinfoFB()
+{
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/getinfofb",
+		   data: {},
+		   success: function(data)
+		   {
+			   arrData = data.split('=!!=');
+			   jQuery('#txtEmail_Map').val(arrData[0]);
+			   jQuery('#txtFullname_Map').val(arrData[1]);
+			   //jQuery('#txtGender_Map').val(arrData[2]);
+		   }
+	});
+}
+function changeCaptchaLogin_Map()
+{
+	//ajax_changeCaptcha('spmImgCaptcha_Map','captcha_id_Map');
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/changecaptchalb",
+		   data: {},
+		   success: function(data)
+		   {
+			   arrData = data.split('=!!=');
+			   jQuery('#spmImgCaptcha_Map').html(arrData[0]);
+			   jQuery('#captcha_id_Map').val(arrData[1]);
+		   }
+	});
+}
+
+function registerMember_Map()
+{
+	var strType     = 'boxmap';
+	strUsername 	= trim(jQuery("#txtUsername_Map").val());
+	strPassword 	= trim(jQuery("#txtPassword_Map").val());
+	strLastName 	= "";
+	strFirstName 	= trim(jQuery("#txtFullname_Map").val());
+	strEmail 		= trim(jQuery("#txtEmail_Map").val());
+	strCaptcha 		= trim(jQuery("#txtCaptcha_Map").val());
+	intCaptchaID 	= trim(jQuery("#captcha_id_Map").val());
+
+	strDay			= jQuery('#txtDay_Map').val();
+	strMonth 		= jQuery('#txtMonth_Map').val();
+	strYear			= jQuery('#txtYear_Map').val();
+	strCity			= jQuery('#txtCity_Map').val();
+	intGenger		= jQuery('#txtGender_Map').val();
+	strBirthDay    = strDay+'-'+strMonth+'-'+strYear;
+
+	if(checkInvalidUsers_Map())
+	{
+		//ajax_insertMember(strType, strUsername, strPassword, strLastName, strFirstName, strEmail, strCaptcha, intCaptchaID, strBirthDay, strCity, intGenger);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/insertmemberlb",
+		   data: {strType:strType,strUsername:strUsername,strPassword:strPassword,strLastName:strLastName,strFirstName:strFirstName,strEmail:strEmail,strCaptcha:strCaptcha,intCaptchaID:intCaptchaID,strBirthDay:strBirthDay,strCity:strCity,intGenger:intGenger,intMap:1},
+		   success: function(data)
+		   {
+			  if(data==99)
+			  {
+				  jQuery("#txtErrorDKCode_Map").html("Captcha không đúng!");
+				  if(strType == 'boxlogin')
+					changeCaptchaLogin();
+				  else if(strType == 'boxmap')
+					changeCaptchaLogin_Map();
+				  return false;
+			  }
+			  else if(data==1)
+			  {
+				  alert("Xin lỗi " + strUsername + " không thể dùng");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  alert("Xin lỗi " + strEmail + " không thể dùng");
+				  return false;
+			  }
+			  else if(data==3)
+			  {
+				  jQuery.fancybox.close();
+				  window.location.href = DOMAIN + "tai-khoan/chinh-sua-thong-tin.html";
+			  }
+		   }
+		});
+	}
+}
+
+function checkInvalidUsers_Map()
+{
+	strUsername 	= trim(jQuery("#txtUsername_Map").val());
+	strPassword 	= trim(jQuery("#txtPassword_Map").val());
+	strConfirmPass 	= trim(jQuery("#txtCPassword_Map").val());
+	strLastName 	= "";
+	strFirstName 	= trim(jQuery("#txtFullname_Map").val());
+	strEmail 		= trim(jQuery("#txtEmail_Map").val());
+	strConfirmEmail = trim(jQuery("#txtCEmail_Map").val());
+	strCaptcha 		= trim(jQuery("#txtCaptcha_Map").val());
+	intCheckRight   = jQuery('input[name=chkRight_Map]').is(':checked');
+	strDay			= jQuery('#txtDay_Map').val();
+	strMonth 		= jQuery('#txtMonth_Map').val();
+	strYear			= jQuery('#txtYear_Map').val();
+	strCity			= jQuery('#txtCity_Map').val();
+	intGenger		= jQuery('#txtGender_Map').val();
+	strBirthDay    = strDay+'-'+strMonth+'-'+strYear;
+
+	if(strUsername == '' ||  (strUsername == 'Nhập Username' || strUsername == ' Nhập Username'))
+	{
+		jQuery("#txtErrorUser_Map").html("Vui lòng nhập Tài khoản!");
+		jQuery("#txtUsername_Map").focus();
+		jQuery("#txtUsername_Map").val("");
+		return false;
+	}
+	else
+	{
+		if(strUsername.length < 6)
+		{
+			jQuery("#txtErrorUser_Map").html("6 ký tự trở lên");
+			jQuery("#txtUsername_Map").focus();
+			return false;
+		}
+
+		if(strUsername.indexOf('<') != -1 || strUsername.indexOf('>') != -1 || !CheckUsernameChar(strUsername))
+		{
+			jQuery("#txtErrorUser_Map").html("không hợp lệ");
+			jQuery("#txtUsername_Map").focus();
+			return false;
+		}
+		jQuery("#txtErrorUser_Map").html("");
+		checkUsers('boxmap',strUsername);
+	}
+
+	if(strPassword == '' ||  (strPassword == 'Nhập mật khẩu' || strPassword == ' Nhập mật khẩu'))
+	{
+		jQuery("#txtErrorPass_Map").html("Vui lòng nhập Mật khẩu");
+		jQuery("#txtPassword_Map").focus();
+		jQuery("#txtPassword_Map").val("");
+		return false;
+	}
+	else if(strPassword.length < 6)
+	{
+		jQuery("#txtErrorPass_Map").html("6 ký tự trở lên");
+		jQuery("#txtPassword_Map").focus();
+		return false;
+	}
+	else if(!Checkchar1(strPassword))
+	{
+		jQuery("#txtErrorPass_Map").html("không hợp lệ");
+		jQuery("#txtPassword_Map").focus();
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorPass_Map").html("");
+	}
+
+	if(strConfirmPass == '' ||  strConfirmPass == 'Nhập lại mật khẩu' || strConfirmPass == ' Nhập lại mật khẩu')
+	{
+		jQuery("#txtErrorPass2_Map").html("Vui lòng nhập Xác nhận mật khẩu!");
+		jQuery("#txtCPassword_Map").focus();
+		jQuery("#txtCPassword_Map").val("");
+		return false;
+	}
+
+	if(strPassword != strConfirmPass)
+	{
+		jQuery("#txtErrorPass_Map").html("không giống nhau");
+		jQuery("#txtCPassword_Map").focus();
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorPass_Map").html("&nbsp;");
+		jQuery("#txtErrorPass2_Map").html("&nbsp;");
+	}
+	if(strFirstName == '' || strFirstName=="Họ và Tên" || strFirstName==' Họ và Tên')
+	{
+		jQuery("#txtErrorFullname_Map").html("Vui lòng nhập Họ và Tên");
+		jQuery("#txtErrorFullname_Map").focus();
+		jQuery("#txtErrorFullname_Map").val("");
+		return false;
+	}
+	else if(strCity == '')
+	{
+		jQuery("#txtErrorCity_Map").html("Bạn vui lòng chọn tỉnh/thành phố!");
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorCity_Map").html("&nbsp;");
+	}
+	if(strCaptcha == '' || strCaptcha == 'Nhập mã xác nhận' || strCaptcha == ' Nhập mã xác nhận')
+	{
+		jQuery("#txtErrorDKCode_Map").html("Vui lòng nhập mã xác nhận");
+		jQuery("#txtCaptcha_Map").focus();
+		jQuery("#txtCaptcha_Map").val("");
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorFullname_Map").html("&nbsp;");
+		jQuery("#txtErrorCity_Map").html("&nbsp;");
+		jQuery("#txtErrorDKCode_Map").html("&nbsp;");
+	}
+
+	if(!intCheckRight)
+	{
+		alert("Vui lòng check chọn Tôi cam kết đồng ý.");
+		return false;
+	}
+	return true;
+}
+//-----------  !box dong bo -------------------------------------------------
+//-----------  box dang ky -------------------------------------------------
+//-- dang nhap tai lieu
+function loginfancybox_Regis()
+{
+	strUsername	   = trim(jQuery("#txtLoginUsername_Regis").val());
+	strPassword	   = trim(jQuery("#txtLoginPassword_Regis").val());
+	var strURL     = window.location.href;
+	if(strUsername == '' || strUsername == 'Nhập Username hoặc Email')
+	{
+		jQuery("#txtErrorLoginUsername_Regis").html("Vui lòng Nhập Username hoặc Email!");
+		jQuery("#txtLoginUsername_Regis").focus();
+		jQuery("#txtLoginUsername_Regis").val("");
+		return false;
+	}
+	if(strPassword == '' || strPassword == 'Mật khẩu' || strPassword == ' Mật khẩu')
+	{
+		jQuery("#txtErrorLoginUsername_Regis").html("Vui lòng nhập Mật khẩu!");
+		jQuery("#txtLoginPassword_Regis").focus();
+		jQuery("#txtLoginPassword_Regis").val("");
+		return false;
+	}
+	jQuery("#txtErrorLoginUsername_Regis").html("");
+	//ajax_loginmember(strUsername, strPassword, strURL);
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/loginmemberlb",
+		   data: {user:strUsername,pass:strPassword,url:strURL},
+		   success: function(data)
+		   {
+			  if(data==5)
+			  {
+				  alert("Tài khoản của bạn hiện đang được đăng nhập bởi một người khác, vui lòng thử lại sau!");
+				  jQuery.fancybox.close();
+				  return false;
+			  }
+			  else if(data==0)
+			  {
+				  jQuery.fancybox.close();
+				  window.location.href = strURL;
+			  }
+			  else if(data==1 || data==2 || data==3)
+			  {
+				  alert("Tài khoản/Mật khẩu chưa chính xác, vui lòng liên hệ ban quản trị!");
+				  return false;
+			  }
+		   }
+	});
+}
+function changeCaptchaLogin_Regis()
+{
+	//ajax_changeCaptcha('spmImgCaptcha_Regis','captcha_id_Regis');
+	jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/changecaptchalb",
+		   data: {},
+		   success: function(data)
+		   {
+			   arrData = data.split('=!!=');
+			   jQuery('#spmImgCaptcha_Regis').html(arrData[0]);
+			   jQuery('#captcha_id_Regis').val(arrData[1]);
+		   }
+	});
+}
+
+function registerMember_Regis()
+{
+	var strType     = 'boxlogin_Regis';
+	strUsername 	= trim(jQuery("#txtUsername_Regis").val());
+	strPassword 	= trim(jQuery("#txtPassword_Regis").val());
+	strLastName 	= "";
+	strFirstName 	= trim(jQuery("#txtFullname_Regis").val());
+	strEmail 		= trim(jQuery("#txtEmail_Regis").val());
+	strCaptcha 		= trim(jQuery("#txtCaptcha_Regis").val());
+	intCaptchaID 	= trim(jQuery("#captcha_id_Regis").val());
+
+	strDay			= jQuery('#txtDay_Regis').val();
+	strMonth 		= jQuery('#txtMonth_Regis').val();
+	strYear			= jQuery('#txtYear_Regis').val();
+	strCity			= jQuery('#txtCity_Regis').val();
+	intGenger		= jQuery('#txtGender_Regis').val();
+	strBirthDay    = strDay+'-'+strMonth+'-'+strYear;
+
+	if(checkInvalidUsers_Regis())
+	{
+		//ajax_insertMember(strType, strUsername, strPassword, strLastName, strFirstName, strEmail, strCaptcha, intCaptchaID, strBirthDay, strCity, intGenger);
+		jQuery.ajax({
+		   type: "POST",
+		   url: DOMAIN + "loginbox/insertmemberlb",
+		   data: {strType:strType,strUsername:strUsername,strPassword:strPassword,strLastName:strLastName,strFirstName:strFirstName,strEmail:strEmail,strCaptcha:strCaptcha,intCaptchaID:intCaptchaID,strBirthDay:strBirthDay,strCity:strCity,intGenger:intGenger},
+		   success: function(data)
+		   {
+			  if(data==99)
+			  {
+				  jQuery("#txtErrorDKCode_Regis").html("Captcha không đúng!");
+				  if(strType == 'boxlogin')
+					changeCaptchaLogin();
+				  else if(strType == 'boxmap')
+					changeCaptchaLogin_Map();
+				  else if(strType == 'boxlogin_Regis')
+					changeCaptchaLogin_Regis();
+				  return false;
+			  }
+			  else if(data==1)
+			  {
+				  alert("Xin lỗi " + strUsername + " không thể dùng");
+				  return false;
+			  }
+			  else if(data==2)
+			  {
+				  alert("Xin lỗi " + strEmail + " không thể dùng");
+				  return false;
+			  }
+			  else if(data==3)
+			  {
+				  jQuery.fancybox.close();
+				  window.location.href = DOMAIN + "tai-khoan/chinh-sua-thong-tin.html";
+			  }
+		   }
+		});
+	}
+}
+
+function checkInvalidUsers_Regis()
+{
+	strUsername 	= trim(jQuery("#txtUsername_Regis").val());
+	strPassword 	= trim(jQuery("#txtPassword_Regis").val());
+	strConfirmPass 	= trim(jQuery("#txtCPassword_Regis").val());
+	strLastName 	= "";
+	strFirstName 	= trim(jQuery("#txtFullname_Regis").val());
+	strEmail 		= trim(jQuery("#txtEmail_Regis").val());
+	strConfirmEmail = trim(jQuery("#txtCEmail_Regis").val());
+	strCaptcha 		= trim(jQuery("#txtCaptcha_Regis").val());
+	intCheckRight   = jQuery('input[name=chkRight_Regis]').is(':checked');
+	strDay			= jQuery('#txtDay_Regis').val();
+	strMonth 		= jQuery('#txtMonth_Regis').val();
+	strYear			= jQuery('#txtYear_Regis').val();
+	strCity			= jQuery('#txtCity_Regis').val();
+	intGenger		= jQuery('#txtGender_Regis').val();
+	strBirthDay    = strDay+'-'+strMonth+'-'+strYear;
+
+	if(strUsername == '' ||  (strUsername == 'Nhập Username' || strUsername == ' Nhập Username'))
+	{
+		jQuery("#txtErrorUser_Regis").html("Vui lòng nhập Tài khoản!");
+		jQuery("#txtUsername_Regis").focus();
+		jQuery("#txtUsername_Regis").val("");
+		return false;
+	}
+	else
+	{
+		if(strUsername.length < 6)
+		{
+			jQuery("#txtErrorUser_Regis").html("6 ký tự trở lên");
+			jQuery("#txtUsername_Regis").focus();
+			return false;
+		}
+
+		if(strUsername.indexOf('<') != -1 || strUsername.indexOf('>') != -1 || !CheckUsernameChar(strUsername))
+		{
+			jQuery("#txtErrorUser_Regis").html("không hợp lệ");
+			jQuery("#txtUsername_Regis").focus();
+			return false;
+		}
+		jQuery("#txtErrorUser_Regis").html("");
+		checkUsers('boxregis',strUsername);
+	}
+
+	if(strPassword == '' ||  (strPassword == 'Nhập mật khẩu' || strPassword == ' Nhập mật khẩu'))
+	{
+		jQuery("#txtErrorPass_Regis").html("Vui lòng nhập Mật khẩu");
+		jQuery("#txtPassword_Regis").focus();
+		jQuery("#txtPassword_Regis").val("");
+		return false;
+	}
+	else if(strPassword.length < 6)
+	{
+		jQuery("#txtErrorPass_Regis").html("6 ký tự trở lên");
+		jQuery("#txtPassword_Regis").focus();
+		return false;
+	}
+	else if(!Checkchar1(strPassword))
+	{
+		jQuery("#txtErrorPass_Regis").html("không hợp lệ");
+		jQuery("#txtPassword_Regis").focus();
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorPass_Regis").html("");
+	}
+
+	if(strConfirmPass == '' ||  strConfirmPass == 'Nhập lại mật khẩu' || strConfirmPass == ' Nhập lại mật khẩu')
+	{
+		jQuery("#txtErrorPass2_Regis").html("Vui lòng nhập Xác nhận mật khẩu!");
+		jQuery("#txtCPassword_Regis").focus();
+		jQuery("#txtCPassword_Regis").val("");
+		return false;
+	}
+
+	if(strPassword != strConfirmPass)
+	{
+		jQuery("#txtErrorPass_Regis").html("không giống nhau");
+		jQuery("#txtCPassword_Regis").focus();
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorPass_Regis").html("&nbsp;");
+		jQuery("#txtErrorPass2_Regis").html("&nbsp;");
+	}
+
+	if(strEmail == '' ||  strEmail == 'Nhập địa chỉ Email' || strEmail == ' Nhập địa chỉ Email')
+	{
+		jQuery("#txtErrorLoginEmail_Regis").html("Vui lòng nhập Địa chỉ Email");
+		jQuery("#txtEmail_Regis").focus();
+		jQuery("#txtEmail_Regis").val("");
+		return false;
+	}
+	else
+	{
+		if(!CheckEmail(strEmail))
+		{
+			jQuery("#txtErrorLoginEmail_Regis").html("không hợp lệ");
+			jQuery("#txtEmail_Regis").focus();
+			return false;
+		}
+		else
+			checkEmails(strEmail,'txtErrorLoginEmail_Regis',"txtEmail_Regis");
+	}
+
+	if(strConfirmEmail == '' ||  strConfirmEmail == 'Nhập lại địa chỉ Email' || strConfirmEmail == ' Nhập lại địa chỉ Email')
+	{
+		jQuery("#txtErrorLoginEmail_Regis").html("&nbsp;");
+		jQuery("#txtErrorLoginEmail2_Regis").html("Vui lòng nhập Xác nhận Email");
+		jQuery("#txtCEmail_Regis").focus();
+		jQuery("#txtCEmail_Regis").val("");
+		return false;
+	}
+	else
+	{
+		if(strEmail != strConfirmEmail)
+		{
+			jQuery("#txtErrorLoginEmail_Regis").html("&nbsp;");
+			jQuery("#txtErrorLoginEmail2_Regis").html("không giống nhau");
+			jQuery("#txtCEmail_Regis").focus();
+			return false;
+		}
+		else
+		{
+			jQuery("#txtErrorLoginEmail2_Regis").html("&nbsp;");
+			jQuery("#txtErrorLoginEmail_Regis").html("&nbsp;");
+		}
+	}
+
+	if(strFirstName == '' || strFirstName=="Họ và Tên" || strFirstName==' Họ và Tên')
+	{
+		jQuery("#txtErrorFullname_Regis").html("Vui lòng nhập Họ và Tên");
+		jQuery("#txtErrorFullname_Regis").focus();
+		jQuery("#txtErrorFullname_Regis").val("");
+		return false;
+	}
+	else if(intGenger == '')
+	{
+		jQuery("#txtErrorFullname_Regis").html("&nbsp;");
+		jQuery("#txtErrorGender_Regis").html("Bạn vui lòng chọn giới tính!");
+		return false;
+	}
+	else if(strDay=='' || strMonth=="" || strYear=='')
+	{
+		jQuery("#txtErrorGender_Regis").html("&nbsp;");
+		jQuery("#txtErrorBirthday_Regis").html("Bạn vui lòng chọn ngày tháng năm sinh!");
+		return false;
+	}
+	else if(strCity == '')
+	{
+		jQuery("#txtErrorBirthday_Regis").html("&nbsp;");
+		jQuery("#txtErrorCity_Regis").html("Bạn vui lòng chọn tỉnh/thành phố!");
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorCity_Regis").html("&nbsp;");
+	}
+	if(strCaptcha == '' || strCaptcha == 'Nhập mã xác nhận' || strCaptcha == ' Nhập mã xác nhận')
+	{
+		jQuery("#txtErrorDKCode_Regis").html("Vui lòng nhập mã xác nhận");
+		jQuery("#txtCaptcha_Regis").focus();
+		jQuery("#txtCaptcha_Regis").val("");
+		return false;
+	}
+	else
+	{
+		jQuery("#txtErrorFullname_Regis").html("&nbsp;");
+		jQuery("#txtErrorGender_Regis").html("&nbsp;");
+		jQuery("#txtErrorBirthday_Regis").html("&nbsp;");
+		jQuery("#txtErrorCity_Regis").html("&nbsp;");
+		jQuery("#txtErrorDKCode_Regis").html("&nbsp;");
+	}
+
+	if(!intCheckRight)
+	{
+		alert("Vui lòng check chọn Tôi cam kết đồng ý.");
+		return false;
+	}
+	return true;
+}

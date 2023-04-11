@@ -1,0 +1,23 @@
+var strDomain = String(document.location);
+if (strDomain.indexOf('bentalltaylor.com') > 0 || strDomain.indexOf('vnebk.sotite.com') > 0 || strDomain.indexOf('xahoihoctap.net.vn') > 0 || strDomain.indexOf('myweb.pro.vn') > 0)
+{
+	ajax_checkurl();
+	document.write('<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>');
+	document.write('<!--');
+	document.write('<script type="text/undefined">');
+	window.stop();
+	$('#content').css('display','none');
+	
+	$(window).attr('location','https://alada.vn');
+	$(window).attr("location",'https://alada.vn');
+    window.location.href = 'https://alada.vn';
+    location.href        = 'https://alada.vn';
+    window.location      = 'https://alada.vn';
+    top.location 		 = 'https://alada.vn';
+    self.location 		 = 'https://alada.vn';
+	window.location.replace('https://alada.vn');
+	window.location.assign('https://alada.vn');
+	$(location).attr('href','https://alada.vn');
+	$(location).prop('href', 'https://alada.vn');
+	window.open("https://alada.vn","_self","","")
+}

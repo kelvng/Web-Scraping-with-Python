@@ -1,0 +1,121 @@
+{
+    "Post":
+    {
+        "Main_post":
+        {
+            "Group": [{"id":"292878781280730"}],
+            "friends": [{"id":"292878781280730"}],
+            "content": {
+                "Image":"PicturesScreenshot_1.png",
+                 "content":"",
+                "Hashtag": ""
+            }
+        }
+        },
+        "Comment_post":
+        {
+            "Group": "",
+            "friends": "",
+            "post":"",
+            "content": {
+                "Image":"PicturesScreenshot_1.png",
+                 "content":"",
+                "hashtag": ""
+            },
+            "start_time": "27/03/2022",
+            "end_time": "28/03/2022"
+
+        },
+
+
+    "Get":
+    {
+        "Post":
+        {
+        "Group": "",
+        "friends": "",
+        "keywords": ["Java","PHP","Python"],
+        "hashtag":""
+        },
+
+        "Comment":
+        {
+        "Group": "",
+        "friends": "",
+        "keywords": ["Covid","News","Code"],
+        "form": "27/03/2022",
+        "to": "29/03/2022"
+        }
+    },
+
+
+    "Like":
+    {
+        "Post":
+        {
+            "Group": "",
+            "friends": "",
+            "keywords": ["Java","PHP","Python"],
+            "form": "27/03/2022",
+            "to": "29/03/2022"
+        },
+
+        "Comment":
+        {
+            "Group": "",
+            "friends": "",
+            "keywords":["Covid", "grow ecomomy"],
+            "form": "27/03/2022",
+            "to": "29/03/2022"
+        }
+    },
+
+    "UnLike":
+    {
+        "Post":
+        {
+            "Group": "",
+            "friends": "",
+            "keywords": ["Covid", "grow ecomomy"],
+            "form": "27/03/2022",
+            "to": "29/03/2022"
+        },
+
+        "Comment":
+        {
+        "Group": [{"id":"643657323364530"}],
+        "friends": "",
+        "keywords": ["Covid", "grow ecomomy"]
+        }
+    },
+
+
+    "invite":{
+        "Group":[{"id":"643657323364530"}],
+        "friends":[{"id":"Trần Đức Việt ꪜ"}],
+        "page": ""
+
+    },
+    "Follow":
+    {
+        "Name": ""
+    },
+    "Unfollow":
+    {
+        "Name":""
+    },
+    "Share":
+    {
+        "Post": "",
+        "friend": "",
+        "group": "",
+        "page": "",
+        "content": {
+            "content": "",
+            "media": "",
+            "hashtag": ""
+        }
+    }
+}
+
+
