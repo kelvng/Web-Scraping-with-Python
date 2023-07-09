@@ -25,13 +25,13 @@ def wait():
     return sleep(random.randint(5,8))
 
 
-browser.get("http://hmmobilehanoi.com/wp-admin/edit.php?post_type=product")
+browser.get("")
 wait()
 
 id = browser.find_element_by_xpath('//*[@id="user_login"]')
-id.send_keys("kythuat.hbweb@gmail.com")
+id.send_keys("")
 pwd = browser.find_element_by_xpath('//*[@id="user_pass"]')
-pwd.send_keys("Hbweb.vn@12345")
+pwd.send_keys("")
 pwd.send_keys(Keys.ENTER)
 
 sleep(3)
